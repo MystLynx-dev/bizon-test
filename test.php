@@ -35,15 +35,24 @@ class Api
 	{
 		/* Здесь ваш код */
         return strtr($template, [
-            '%id%' => $array['id'],
-            '%name%' => $array['name'],
-            '%role%' => $array['role'],
-            '%salary%' => $array['salary']
+            '%id%'          => $array['id'],
+            '%name%'        => $array['name'],
+            '%role%'        => $array['role'],
+            '%salary%'      => $array['salary']
         ]);
 	}
 
 
-    public function compare_objects($obj1, $obj2): string
+    /**
+     * Сравнивает объекты на идентичность
+     *
+     * @version     v.1.0 (dd/mm/yyyy)
+     * @author      User Name
+     * @param       array $obj1
+     * @param       array $obj2
+     * @return      string
+     */
+    public function compare_objects(array $obj1, array $obj2): string
     {
         return $obj1 === $obj2 ? 'Объекты идентичны' : 'Объекты не совпадают';
     }
