@@ -18,7 +18,7 @@ class Api
 {
 	public function __construct()
 	{
-	
+
 	}
 
 
@@ -33,12 +33,20 @@ class Api
 	 */
 	public function get_api_path(array $array, string $template) : string
 	{
-		$result = '';
-
 		/* Здесь ваш код */
-
-		return $result;
+        return strtr($template, [
+            '%id%' => $array['id'],
+            '%name%' => $array['name'],
+            '%role%' => $array['role'],
+            '%salary%' => $array['salary']
+        ]);
 	}
+
+
+    public function compare_objects($obj1, $obj2): string
+    {
+        return $obj1 === $obj2 ? 'Объекты идентичны' : 'Объекты не совпадают';
+    }
 }
 
 $user =
@@ -58,11 +66,13 @@ $api_path_templates =
 
 $api = new Api();
 
-$api_paths = array_map(function ($api_path_template) use ($api, $user)
+$api_paths = array_map(static function ($api_path_template) use ($api, $user)
 {
 	return $api->get_api_path($user, $api_path_template);
 }, $api_path_templates);
 
-echo json_encode($api_paths, JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE););
+echo json_encode($api_paths, JSON_FORCE_OBJECT | JSON_UNESCAPED_UNICODE) . PHP_EOL;
 
-$expected_result = ['/api/items/20/John%20Dow','/api/items/20/QA','/api/items/20/100'];
+$expected_result = ['/api/items/20/John Dow','/api/items/20/QA','/api/items/20/100'];
+
+echo $api->compare_objects($api_paths, $expected_result) . PHP_EOL;
